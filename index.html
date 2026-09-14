@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ATM Simulator</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================================
+         ATM KIOSK
+    ========================================== -->
+
+    <div class="atm-kiosk">
+
+        <!-- TOP HEADER -->
+
+        <header class="atm-header">
+
+            <div class="bank-brand">
+
+                <div class="bank-logo">
+                    U
+                </div>
+
+                <div class="brand-text">
+                    <h2>UNITY BANK</h2>
+                    <span>ATM SIMULATOR</span>
+                </div>
+
+            </div>
+
+
+            <div class="system-status">
+
+                <span class="status-light"></span>
+
+                <span>SYSTEM ONLINE</span>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================
+             MAIN ATM SCREEN
+        ====================================== -->
+
+        <main class="atm-screen">
+
+
+            <!-- =================================
+                 START SCREEN
+            ================================== -->
+
+            <section
+                id="startScreen"
+                class="screen-page active"
+            >
+
+                <div class="screen-icon card-icon">
+                    💳
+                </div>
+
+                <h1>Welcome</h1>
+
+                <p class="screen-subtitle">
+                    Welcome to Unity Bank ATM
+                </p>
+
+
+                <!-- 3D CARD SLOT -->
+
+                <div class="card-slot">
+
+                    <div class="card-slot-glow"></div>
+
+                    <div class="fake-bank-card">
+
+                        <div class="card-chip"></div>
+
+                        <div class="card-number">
+                            •••• •••• •••• 1234
+                        </div>
+
+                        <div class="card-name">
+                            ATM SIMULATOR
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="startButton"
+                    class="primary-button big-button"
+                >
+                    INSERT CARD
+                </button>
+
+
+                <p class="security-note">
+                    🔒 Simulator mode — no real banking connection
+                </p>
+
+            </section>
+
+
+
+            <!-- =================================
+                 PIN SCREEN
+            ================================== -->
+
+            <section
+                id="pinScreen"
+                class="screen-page"
+            >
+
+                <div class="screen-icon">
+                    🔐
+                </div>
+
+                <h1>Enter Your PIN</h1>
+
+                <p class="screen-subtitle">
+                    Please enter your 4-digit PIN
+                </p>
+
+
+                <!-- PIN DOTS -->
+
+                <div
+                    id="pinDisplay"
+                    class="pin-display"
+                >
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+
+                <!-- PIN KEYPAD -->
+
+                <div
+                    id="pinKeypad"
+                    class="keypad"
+                >
+
+                    <button data-number="1">1</button>
+                    <button data-number="2">2</button>
+                    <button data-number="3">3</button>
+
+                    <button data-number="4">4</button>
+                    <button data-number="5">5</button>
+                    <button data-number="6">6</button>
+
+                    <button data-number="7">7</button>
+                    <button data-number="8">8</button>
+                    <button data-number="9">9</button>
+
+                    <button
+                        class="key-clear"
+                        id="clearPin"
+                    >
+                        CLEAR
+                    </button>
+
+                    <button data-number="0">
+                        0
+                    </button>
+
+                    <button
+                        class="key-enter"
+                        id="enterPin"
+                    >
+                        ENTER
+                    </button>
+
+                </div>
+
+
+                <p
+                    id="pinMessage"
+                    class="error-message"
+                ></p>
+
+            </section>
+
+
+
+            <!-- =================================
+                 ACCOUNT SELECTION
+            ================================== -->
+
+            <section
+                id="accountScreen"
+                class="screen-page"
+            >
+
+                <div class="screen-icon">
+                    🏦
+                </div>
+
+                <h1>Select Account</h1>
+
+                <p class="screen-subtitle">
+                    Which account would you like to use?
+                </p>
+
+
+                <div class="account-options">
+
+
+                    <!-- SAVINGS -->
+
+                    <button
+                        class="account-card"
+                        data-account="savings"
+                    >
+
+                        <div class="account-card-icon">
+                            💰
+                        </div>
+
+                        <div class="account-card-text">
+
+                            <strong>
+                                Savings Account
+                            </strong>
+
+                            <span>
+                                Personal savings
+                            </span>
+
+                        </div>
+
+                        <div class="arrow">
+                            →
+                        </div>
+
+                    </button>
+
+
+
+                    <!-- CURRENT -->
+
+                    <button
+                        class="account-card"
+                        data-account="current"
+                    >
+
+                        <div class="account-card-icon">
+                            💳
+                        </div>
+
+                        <div class="account-card-text">
+
+                            <strong>
+                                Current Account
+                            </strong>
+
+                            <span>
+                                Everyday banking
+                            </span>
+
+                        </div>
+
+                        <div class="arrow">
+                            →
+                        </div>
+
+                    </button>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================
+                 MAIN MENU
+            ================================== -->
+
+            <section
+                id="menuScreen"
+                class="screen-page"
+            >
+
+                <div class="menu-header">
+
+                    <div>
+
+                        <span class="menu-small-title">
+                            SELECTED ACCOUNT
+                        </span>
+
+                        <h2 id="menuAccountName">
+                            Savings Account
+                        </h2>
+
+                    </div>
+
+
+                    <div class="mini-balance">
+
+                        <span>
+                            AVAILABLE BALANCE
+                        </span>
+
+                        <strong id="menuBalance">
+                            Rs 50,000
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <h1 class="menu-title">
+                    What would you like to do?
+                </h1>
+
+
+                <div class="transaction-grid">
+
+
+                    <!-- WITHDRAW -->
+
+                    <button
+                        class="transaction-button"
+                        data-action="withdraw"
+                    >
+
+                        <div class="transaction-icon">
+                            💵
+                        </div>
+
+                        <strong>
+                            Withdraw Cash
+                        </strong>
+
+                        <span>
+                            Take out cash
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- DEPOSIT -->
+
+                    <button
+                        class="transaction-button"
+                        data-action="deposit"
+                    >
+
+                        <div class="transaction-icon">
+                            💰
+                        </div>
+
+                        <strong>
+                            Deposit Cash
+                        </strong>
+
+                        <span>
+                            Add money
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- TRANSFER -->
+
+                    <button
+                        class="transaction-button"
+                        data-action="transfer"
+                    >
+
+                        <div class="transaction-icon">
+                            🔄
+                        </div>
+
+                        <strong>
+                            Transfer
+                        </strong>
+
+                        <span>
+                            Send money
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- BALANCE -->
+
+                    <button
+                        class="transaction-button"
+                        data-action="balance"
+                    >
+
+                        <div class="transaction-icon">
+                            📊
+                        </div>
+
+                        <strong>
+                            Balance Inquiry
+                        </strong>
+
+                        <span>
+                            Check balance
+                        </span>
+
+                    </button>
+
+
+                </div>
+
+
+                <button
+                    id="changeAccount"
+                    class="secondary-button"
+                >
+                    CHANGE ACCOUNT
+                </button>
+
+            </section>
+
+
+
+            <!-- =================================
+                 WITHDRAW SCREEN
+            ================================== -->
+
+            <section
+                id="withdrawScreen"
+                class="screen-page"
+            >
+
+                <button
+                    class="back-button"
+                    data-back="menuScreen"
+                >
+                    ← BACK
+                </button>
+
+
+                <div class="screen-icon">
+                    💵
+                </div>
+
+                <h1>Withdraw Cash</h1>
+
+                <p class="screen-subtitle">
+                    Select the amount you want to withdraw
+                </p>
+
+
+                <!-- QUICK AMOUNTS -->
+
+                <div class="amount-grid">
+
+                    <button
+                        class="amount-button"
+                        data-amount="500"
+                    >
+                        Rs 500
+                    </button>
+
+                    <button
+                        class="amount-button"
+                        data-amount="1000"
+                    >
+                        Rs 1,000
+                    </button>
+
+                    <button
+                        class="amount-button"
+                        data-amount="2000"
+                    >
+                        Rs 2,000
+                    </button>
+
+                    <button
+                        class="amount-button"
+                        data-amount="5000"
+                    >
+                        Rs 5,000
+                    </button>
+
+                    <button
+                        class="amount-button"
+                        data-amount="10000"
+                    >
+                        Rs 10,000
+                    </button>
+
+                    <button
+                        class="amount-button"
+                        data-amount="20000"
+                    >
+                        Rs 20,000
+                    </button>
+
+                </div>
+
+
+                <!-- OTHER AMOUNT -->
+
+                <div class="other-amount">
+
+                    <label>
+                        OTHER AMOUNT
+                    </label>
+
+                    <div class="money-input">
+
+                        <span>Rs</span>
+
+                        <input
+                            id="otherAmount"
+                            type="number"
+                            min="100"
+                            step="100"
+                            placeholder="Enter amount"
+                        >
+
+                    </div>
+
+
+                    <button
+                        id="otherAmountButton"
+                        class="primary-button"
+                    >
+                        WITHDRAW THIS AMOUNT
+                    </button>
+
+                </div>
+
+
+                <p
+                    id="withdrawMessage"
+                    class="error-message"
+                ></p>
+
+            </section>
+
+
+
+            <!-- =================================
+                 TAKING CASH SCREEN
+            ================================== -->
+
+            <section
+                id="cashScreen"
+                class="screen-page"
+            >
+
+                <div class="screen-icon cash-animation">
+                    💵
+                </div>
+
+                <h1>Take Your Cash</h1>
+
+                <p class="screen-subtitle">
+                    Please take your cash from the cash slot
+                </p>
+
+
+                <div class="cash-display">
+
+                    <div class="cash-bundle">
+
+                        <span>Rs</span>
+
+                        <strong id="cashAmount">
+                            5,000
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="cashTakenButton"
+                    class="primary-button big-button"
+                >
+                    I HAVE TAKEN THE CASH
+                </button>
+
+            </section>
+
+
+
+            <!-- =================================
+                 RECEIPT CHOICE
+            ================================== -->
+
+            <section
+                id="receiptChoiceScreen"
+                class="screen-page"
+            >
+
+                <div class="screen-icon">
+                    🧾
+                </div>
+
+                <h1>Would You Like A Receipt?</h1>
+
+                <p class="screen-subtitle">
+                    Choose an option below
+                </p>
+
+
+                <div class="receipt-options">
+
+                    <button
+                        id="receiptYes"
+                        class="choice-button yes"
+                    >
+
+                        <span>🧾</span>
+
+                        <strong>
+                            YES, PRINT RECEIPT
+                        </strong>
+
+                    </button>
+
+
+                    <button
+                        id="receiptNo"
+                        class="choice-button no"
+                    >
+
+                        <span>✕</span>
+
+                        <strong>
+                            NO RECEIPT
+                        </strong>
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================
+                 RECEIPT RESULT
+            ================================== -->
+
+            <section
+                id="receiptScreen"
+                class="screen-page"
+            >
+
+                <div class="screen-icon">
+                    🧾
+                </div>
+
+                <h1>Receipt Ready</h1>
+
+                <div class="receipt-paper">
+
+                    <div class="receipt-bank">
+                        UNITY BANK
+                    </div>
+
+                    <div class="receipt-title">
+                        ATM SIMULATOR
+                    </div>
+
+                    <div class="receipt-line"></div>
+
+
+                    <div class="receipt-row">
+
+                        <span>
+                            Transaction
+                        </span>
+
+                        <strong id="receiptTransaction">
+                            CASH WITHDRAWAL
+                        </strong>
+
+                    </div>
+
+
+                    <div class="receipt-row">
+
+                        <span>
+                            Account
+                        </span>
+
+                        <strong id="receiptAccount">
+                            Savings
+                        </strong>
+
+                    </div>
+
+
+                    <div class="receipt-row">
+
+                        <span>
+                            Amount
+                        </span>
+
+                        <strong id="receiptAmount">
+                            Rs 5,000
+                        </strong>
+
+                    </div>
+
+
+                    <div class="receipt-line"></div>
+
+
+                    <div class="receipt-row">
+
+                        <span>
+                            Remaining Balance
+                        </span>
+
+                        <strong id="receiptBalance">
+                            Rs 45,000
+                        </strong>
+
+                    </div>
+
+
+                    <div class="receipt-line"></div>
+
+
+                    <p>
+                        Thank you for using
+                        Unity Bank ATM Simulator.
+                    </p>
+
+                </div>
+
+
+                <!-- TWO OPTIONS AFTER RECEIPT -->
+
+                <div class="receipt-actions">
+
+                    <button
+                        id="seeReceipt"
+                        class="primary-button"
+                    >
+                        SEE RECEIPT
+                    </button>
+
+                    <button
+                        id="finishAfterReceipt"
+                        class="secondary-button"
+                    >
+                        FINISH
+                    </button>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================
+                 RECEIPT VIEW
+            ================================== -->
+
+            <section
+                id="receiptViewScreen"
+                class="screen-page"
+            >
+
+                <div class="screen-icon">
+                    📄
+                </div>
+
+                <h1>Your Receipt</h1>
+
+                <div
+                    id="fullReceipt"
+                    class="full-receipt"
+                >
+
+                    <div class="receipt-bank">
+                        UNITY BANK
+                    </div>
+
+                    <div class="receipt-title">
+                        ATM SIMULATOR
+                    </div>
+
+                    <div class="receipt-line"></div>
+
+                    <div class="receipt-row">
+                        <span>Transaction</span>
+                        <strong id="viewTransaction">
+                            CASH WITHDRAWAL
+                        </strong>
+                    </div>
+
+                    <div class="receipt-row">
+                        <span>Account</span>
+                        <strong id="viewAccount">
+                            Savings
+                        </strong>
+                    </div>
+
+                    <div class="receipt-row">
+                        <span>Amount</span>
+                        <strong id="viewAmount">
+                            Rs 5,000
+                        </strong>
+                    </div>
+
+                    <div class="receipt-row">
+                        <span>Balance</span>
+                        <strong id="viewBalance">
+                            Rs 45,000
+                        </strong>
+                    </div>
+
+                    <div class="receipt-line"></div>
+
+                    <p>
+                        TRANSACTION APPROVED
+                    </p>
+
+                    <p>
+                        UNITY BANK ATM SIMULATOR
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="finishFromReceipt"
+                    class="primary-button big-button"
+                >
+                    FINISH
+                </button>
+
+            </section>
+
+
+
+            <!-- =================================
+                 DEPOSIT SCREEN
+            ================================== -->
+
+            <section
+                id="depositScreen"
+                class="screen-page"
+            >
+
+                <button
+                    class="back-button"
+                    data-back="menuScreen"
+                >
+                    ← BACK
+                </button>
+
+
+                <div class="screen-icon">
+                    💰
+                </div>
+
+                <h1>Deposit Cash</h1>
+
+                <p class="screen-subtitle">
+                    Enter the amount you want to deposit
+                </p>
+
+
+                <div class="money-input large-input">
+
+                    <span>Rs</span>
+
+                    <input
+                        id="depositAmount"
+                        type="number"
+                        min="100"
+                        step="100"
+                        placeholder="Enter amount"
+                    >
+
+                </div>
+
+
+                <button
+                    id="depositButton"
+                    class="primary-button big-button"
+                >
+                    DEPOSIT CASH
+                </button>
+
+
+                <p
+                    id="depositMessage"
+                    class="error-message"
+                ></p>
+
+            </section>
+
+
+
+            <!-- =================================
+                 TRANSFER SCREEN
+            ================================== -->
+
+            <section
+                id="transferScreen"
+                class="screen-page"
+            >
+
+                <button
+                    class="back-button"
+                    data-back="menuScreen"
+                >
+                    ← BACK
+                </button>
+
+
+                <div class="screen-icon">
+                    🔄
+                </div>
+
+                <h1>Transfer Money</h1>
+
+                <p class="screen-subtitle">
+                    Transfer money to another simulator account
+                </p>
+
+
+                <input
+                    id="recipient"
+                    class="text-input"
+                    type="text"
+                    placeholder="Recipient name"
+                >
+
+
+                <div class="money-input large-input">
+
+                    <span>Rs</span>
+
+                    <input
+                        id="transferAmount"
+                        type="number"
+                        min="100"
+                        step="100"
+                        placeholder="Transfer amount"
+                    >
+
+                </div>
+
+
+                <button
+                    id="transferButton"
+                    class="primary-button big-button"
+                >
+                    TRANSFER MONEY
+                </button>
+
+
+                <p
+                    id="transferMessage"
+                    class="error-message"
+                ></p>
+
+            </section>
+
+
+
+            <!-- =================================
+                 BALANCE SCREEN
+            ================================== -->
+
+            <section
+                id="balanceScreen"
+                class="screen-page"
+            >
+
+                <button
+                    class="back-button"
+                    data-back="menuScreen"
+                >
+                    ← BACK
+                </button>
+
+
+                <div class="screen-icon">
+                    📊
+                </div>
+
+                <h1>Balance Inquiry</h1>
+
+                <p class="screen-subtitle">
+                    Your available balance
+                </p>
+
+
+                <div class="balance-display">
+
+                    <span id="balanceAccount">
+                        Savings Account
+                    </span>
+
+                    <strong id="balanceAmount">
+                        Rs 50,000
+                    </strong>
+
+                    <small>
+                        AVAILABLE BALANCE
+                    </small>
+
+                </div>
+
+
+                <button
+                    id="balanceDone"
+                    class="primary-button big-button"
+                >
+                    DONE
+                </button>
+
+            </section>
+
+
+
+            <!-- =================================
+                 PROCESSING SCREEN
+            ================================== -->
+
+            <section
+                id="processingScreen"
+                class="screen-page"
+            >
+
+                <div class="processing-loader">
+                    <div></div>
+                </div>
+
+                <h1 id="processingTitle">
+                    Processing...
+                </h1>
+
+                <p id="processingText">
+                    Please wait
+                </p>
+
+            </section>
+
+
+
+            <!-- =================================
+                 FINISHED SCREEN
+            ================================== -->
+
+            <section
+                id="finishedScreen"
+                class="screen-page"
+            >
+
+                <div class="finish-icon">
+                    ✓
+                </div>
+
+                <h1>Transaction Complete</h1>
+
+                <p class="screen-subtitle">
+                    Thank you for using Unity Bank ATM Simulator
+                </p>
+
+
+                <div class="card-ejected">
+
+                    <div class="fake-bank-card">
+
+                        <div class="card-chip"></div>
+
+                        <div class="card-number">
+                            •••• •••• •••• 1234
+                        </div>
+
+                        <div class="card-name">
+                            UNITY BANK
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <p class="take-card">
+                    Please take your card
+                </p>
+
+
+                <button
+                    id="startAgain"
+                    class="primary-button big-button"
+                >
+                    START AGAIN
+                </button>
+
+            </section>
+
+
+        </main>
+
+
+
+        <!-- =====================================
+             PHYSICAL ATM LOWER AREA
+        ====================================== -->
+
+        <footer class="atm-footer">
+
+
+            <!-- CASH SLOT -->
+
+            <div class="physical-slot">
+
+                <span>
+                    CASH
+                </span>
+
+                <div class="slot-opening"></div>
+
+            </div>
+
+
+            <!-- RECEIPT SLOT -->
+
+            <div class="physical-slot">
+
+                <span>
+                    RECEIPT
+                </span>
+
+                <div class="slot-opening receipt-slot"></div>
+
+            </div>
+
+
+            <!-- HELP BUTTON -->
+
+            <button
+                id="helpButton"
+                class="help-button"
+            >
+
+                <span>?</span>
+
+                HELP
+
+            </button>
+
+
+        </footer>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="script.js"></script>
+
+</body>
+</html>
+```
