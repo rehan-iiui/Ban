@@ -1,0 +1,1912 @@
+/* =========================================================
+   UNITY BANK ATM SIMULATOR
+   3D KIOSK UI
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --blue: #238cff;
+    --blue-light: #55b5ff;
+    --blue-dark: #0755a5;
+
+    --purple: #7957ff;
+    --cyan: #19d9ff;
+
+    --green: #20d493;
+    --green-dark: #087b50;
+
+    --red: #ff5368;
+
+    --body-dark: #080c12;
+    --body-mid: #171f29;
+    --body-light: #3d4a58;
+
+    --screen-dark: #06101a;
+    --screen-mid: #10283b;
+
+    --white: #f7faff;
+    --muted: #9caaba;
+}
+
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color: var(--white);
+
+    background:
+        radial-gradient(
+            circle at 50% 15%,
+            #263f5a 0%,
+            #111d2a 35%,
+            #070b10 75%,
+            #020304 100%
+        );
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   ATM KIOSK BODY
+   ========================================================= */
+
+.atm-kiosk {
+    width: min(1120px, 97vw);
+
+    min-height: 850px;
+
+    position: relative;
+
+    padding: 20px;
+
+    border-radius: 38px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #485562 0%,
+            #252f3a 18%,
+            #111820 52%,
+            #080c11 100%
+        );
+
+    border: 2px solid #596774;
+
+    box-shadow:
+        0 45px 80px rgba(0, 0, 0, .75),
+        0 15px 30px rgba(0, 0, 0, .5),
+        inset 4px 4px 12px rgba(255, 255, 255, .12),
+        inset -7px -7px 14px rgba(0, 0, 0, .75);
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   ATM HEADER
+   ========================================================= */
+
+.atm-header {
+    height: 90px;
+
+    padding: 0 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+/* BANK BRAND */
+
+.bank-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.bank-logo {
+    width: 55px;
+    height: 55px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    font-size: 27px;
+    font-weight: 900;
+
+    background:
+        linear-gradient(
+            145deg,
+            #5ac2ff,
+            #197ce2 45%,
+            #064889
+        );
+
+    border: 1px solid #79caff;
+
+    box-shadow:
+        6px 8px 12px rgba(0, 0, 0, .6),
+        inset 3px 3px 6px rgba(255, 255, 255, .35),
+        inset -4px -4px 7px rgba(0, 0, 0, .45);
+}
+
+.brand-text h2 {
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.brand-text span {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 9px;
+
+    color: #aeb9c5;
+
+    letter-spacing: 3px;
+}
+
+
+/* SYSTEM STATUS */
+
+.system-status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: #a9f5d4;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    letter-spacing: 1px;
+}
+
+.status-light {
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background: var(--green);
+
+    box-shadow:
+        0 0 8px var(--green),
+        0 0 18px rgba(32, 212, 147, .6);
+}
+
+
+/* =========================================================
+   ATM SCREEN
+   ========================================================= */
+
+.atm-screen {
+    flex: 1;
+
+    min-height: 650px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 28px;
+
+    border: 5px solid #030609;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(40, 130, 200, .18),
+            transparent 45%
+        ),
+        linear-gradient(
+            145deg,
+            #07121d,
+            #102333 45%,
+            #071018
+        );
+
+    box-shadow:
+        inset 0 0 35px rgba(0, 0, 0, .95),
+        inset 0 0 8px rgba(70, 160, 220, .18),
+        0 8px 20px rgba(0, 0, 0, .65);
+}
+
+
+/* =========================================================
+   SCREEN PAGES
+   ========================================================= */
+
+.screen-page {
+    display: none;
+
+    width: 100%;
+    min-height: 650px;
+
+    padding: 40px 55px;
+
+    text-align: center;
+
+    animation: screenAppear .28s ease;
+}
+
+.screen-page.active {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+@keyframes screenAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(.99);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+.screen-page h1 {
+    margin-top: 5px;
+
+    font-size: clamp(27px, 4vw, 38px);
+
+    letter-spacing: -.5px;
+}
+
+.screen-subtitle {
+    margin-top: 10px;
+
+    color: var(--muted);
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   ICONS
+   ========================================================= */
+
+.screen-icon {
+    width: 78px;
+    height: 78px;
+
+    margin: 5px 0 15px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 24px;
+
+    font-size: 42px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(50, 160, 255, .24),
+            rgba(90, 65, 255, .12)
+        );
+
+    border: 1px solid rgba(100, 190, 255, .25);
+
+    box-shadow:
+        0 12px 25px rgba(0, 0, 0, .45),
+        inset 2px 2px 5px rgba(255, 255, 255, .08);
+}
+
+
+/* =========================================================
+   GENERAL BUTTON BASE
+   ========================================================= */
+
+button {
+    font-family: inherit;
+
+    border: none;
+    outline: none;
+
+    color: white;
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        transform .13s ease,
+        filter .13s ease,
+        box-shadow .13s ease;
+}
+
+button:hover {
+    filter: brightness(1.1);
+}
+
+button:active {
+    transform:
+        translateY(5px)
+        scale(.985);
+}
+
+
+/* =========================================================
+   PRIMARY 3D BUTTON
+   ========================================================= */
+
+.primary-button {
+    position: relative;
+
+    padding: 15px 27px;
+
+    border-radius: 14px;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    letter-spacing: .7px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #55baff 0%,
+            #258cf0 45%,
+            #0754a4 100%
+        );
+
+    border: 1px solid #65c1ff;
+
+    box-shadow:
+        0 7px 0 #043d78,
+        0 13px 20px rgba(0, 0, 0, .5),
+        inset 2px 2px 6px rgba(255, 255, 255, .3),
+        inset -3px -4px 7px rgba(0, 0, 0, .25);
+}
+
+.primary-button:hover {
+    transform: translateY(-2px);
+}
+
+.primary-button:active {
+    transform: translateY(5px);
+
+    box-shadow:
+        0 2px 0 #043d78,
+        inset 2px 2px 6px rgba(0, 0, 0, .25);
+}
+
+.big-button {
+    min-width: 280px;
+
+    margin-top: 25px;
+
+    padding: 18px 35px;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+   ========================================================= */
+
+.secondary-button {
+    padding: 13px 25px;
+
+    border-radius: 12px;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    letter-spacing: .7px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #3a4653,
+            #171e27
+        );
+
+    box-shadow:
+        0 6px 0 #080b0f,
+        0 12px 18px rgba(0, 0, 0, .45),
+        inset 2px 2px 5px rgba(255, 255, 255, .09),
+        inset -3px -3px 5px rgba(0, 0, 0, .45);
+}
+
+
+/* =========================================================
+   START SCREEN CARD
+   ========================================================= */
+
+.card-slot {
+    width: 270px;
+    height: 175px;
+
+    margin: 25px 0 5px;
+
+    position: relative;
+
+    display: grid;
+    place-items: center;
+
+    perspective: 900px;
+}
+
+.card-slot-glow {
+    position: absolute;
+
+    width: 230px;
+    height: 130px;
+
+    border-radius: 20px;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(20, 155, 255, .35),
+            transparent 70%
+        );
+
+    filter: blur(12px);
+}
+
+
+/* CARD */
+
+.fake-bank-card {
+    width: 240px;
+    height: 145px;
+
+    position: relative;
+
+    padding: 19px;
+
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #334f68,
+            #172a3c 45%,
+            #0b151f
+        );
+
+    border: 1px solid #58748e;
+
+    box-shadow:
+        10px 16px 28px rgba(0, 0, 0, .65),
+        inset 2px 2px 6px rgba(255, 255, 255, .15),
+        inset -4px -4px 7px rgba(0, 0, 0, .45);
+
+    transform:
+        rotateX(7deg)
+        rotateY(-8deg);
+
+    transition: .3s ease;
+}
+
+.card-slot:hover .fake-bank-card {
+    transform:
+        rotateX(2deg)
+        rotateY(0deg)
+        translateY(-5px);
+}
+
+
+.card-chip {
+    width: 44px;
+    height: 32px;
+
+    border-radius: 7px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f6dc78,
+            #c39c35 50%,
+            #806018
+        );
+
+    border: 1px solid #f4db7e;
+
+    box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, .5),
+        3px 4px 7px rgba(0, 0, 0, .4);
+}
+
+
+.card-number {
+    margin-top: 25px;
+
+    font-family: monospace;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    color: #dce9f5;
+}
+
+
+.card-name {
+    margin-top: 9px;
+
+    text-align: right;
+
+    font-size: 8px;
+
+    color: #aebdca;
+
+    letter-spacing: 1px;
+}
+
+
+.security-note {
+    margin-top: 25px;
+
+    font-size: 10px;
+
+    color: #758697;
+}
+
+
+/* =========================================================
+   PIN
+   ========================================================= */
+
+.pin-display {
+    display: flex;
+
+    gap: 18px;
+
+    margin: 25px 0;
+}
+
+.pin-display span {
+    width: 22px;
+    height: 22px;
+
+    border-radius: 50%;
+
+    background: #07101a;
+
+    border: 2px solid #506a80;
+
+    box-shadow:
+        inset 2px 2px 6px #000,
+        0 2px 4px rgba(0, 0, 0, .5);
+}
+
+.pin-display span.filled {
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #8bd4ff,
+            #188bf0 55%,
+            #07539c
+        );
+
+    border-color: #75caff;
+
+    box-shadow:
+        0 0 10px rgba(35, 140, 255, .7),
+        inset 2px 2px 4px rgba(255, 255, 255, .4);
+}
+
+
+/* =========================================================
+   KEYPAD
+   ========================================================= */
+
+.keypad {
+    width: min(370px, 100%);
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 13px;
+}
+
+.keypad button {
+    height: 62px;
+
+    border-radius: 13px;
+
+    font-size: 19px;
+    font-weight: 800;
+
+    background:
+        linear-gradient(
+            145deg,
+            #435361,
+            #1b252f
+        );
+
+    border: 1px solid #536676;
+
+    box-shadow:
+        0 7px 0 #090e13,
+        0 12px 17px rgba(0, 0, 0, .5),
+        inset 2px 2px 5px rgba(255, 255, 255, .12),
+        inset -3px -3px 5px rgba(0, 0, 0, .4);
+}
+
+.keypad button:active {
+    box-shadow:
+        0 2px 0 #090e13,
+        inset 2px 2px 5px rgba(0, 0, 0, .5);
+}
+
+.key-clear {
+    font-size: 11px !important;
+
+    background:
+        linear-gradient(
+            145deg,
+            #87424c,
+            #3c1d23
+        ) !important;
+
+    border-color: #a65a65 !important;
+}
+
+.key-enter {
+    font-size: 11px !important;
+
+    background:
+        linear-gradient(
+            145deg,
+            #35d89d,
+            #087b51
+        ) !important;
+
+    border-color: #56e7b4 !important;
+}
+
+
+/* =========================================================
+   ERROR / MESSAGE
+   ========================================================= */
+
+.error-message {
+    min-height: 25px;
+
+    margin-top: 15px;
+
+    color: #ffc75e;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   ACCOUNT SELECTION
+   ========================================================= */
+
+.account-options {
+    width: min(700px, 100%);
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 25px;
+
+    margin-top: 35px;
+}
+
+.account-card {
+    min-height: 175px;
+
+    padding: 25px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+
+    text-align: left;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #29435a,
+            #111c27
+        );
+
+    border: 1px solid #405d74;
+
+    box-shadow:
+        0 9px 0 #070c11,
+        0 17px 27px rgba(0, 0, 0, .55),
+        inset 2px 2px 6px rgba(255, 255, 255, .1),
+        inset -4px -4px 8px rgba(0, 0, 0, .45);
+}
+
+.account-card:hover {
+    transform: translateY(-5px);
+}
+
+.account-card-icon {
+    width: 60px;
+    height: 60px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 18px;
+
+    font-size: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #347fb6,
+            #142d43
+        );
+
+    box-shadow:
+        inset 2px 2px 5px rgba(255, 255, 255, .12),
+        4px 6px 10px rgba(0, 0, 0, .45);
+}
+
+.account-card-text {
+    flex: 1;
+}
+
+.account-card-text strong {
+    display: block;
+
+    font-size: 17px;
+}
+
+.account-card-text span {
+    display: block;
+
+    margin-top: 7px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+.arrow {
+    font-size: 27px;
+
+    color: #73c5ff;
+}
+
+
+/* =========================================================
+   MENU HEADER
+   ========================================================= */
+
+.menu-header {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 15px 20px;
+
+    margin-bottom: 25px;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(55, 115, 160, .18),
+            rgba(255, 255, 255, .025)
+        );
+
+    border: 1px solid rgba(100, 180, 230, .13);
+
+    box-shadow:
+        inset 2px 2px 5px rgba(255, 255, 255, .04);
+}
+
+.menu-small-title {
+    display: block;
+
+    color: #7890a3;
+
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+}
+
+.menu-header h2 {
+    margin-top: 4px;
+
+    font-size: 18px;
+}
+
+.mini-balance {
+    text-align: right;
+}
+
+.mini-balance span {
+    display: block;
+
+    color: #7890a3;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+}
+
+.mini-balance strong {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #76caff;
+
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   TRANSACTION GRID
+   ========================================================= */
+
+.menu-title {
+    margin-top: 5px;
+}
+
+.transaction-grid {
+    width: min(720px, 100%);
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 20px;
+
+    margin-top: 20px;
+}
+
+.transaction-button {
+    min-height: 155px;
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #2b4255,
+            #101923
+        );
+
+    border: 1px solid #405a70;
+
+    box-shadow:
+        0 9px 0 #070c11,
+        0 17px 25px rgba(0, 0, 0, .5),
+        inset 2px 2px 6px rgba(255, 255, 255, .08),
+        inset -4px -4px 7px rgba(0, 0, 0, .45);
+}
+
+.transaction-button:hover {
+    transform: translateY(-5px);
+}
+
+.transaction-icon {
+    font-size: 38px;
+
+    margin-bottom: 3px;
+}
+
+.transaction-button strong {
+    font-size: 17px;
+}
+
+.transaction-button span {
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.back-button {
+    align-self: flex-start;
+
+    padding: 10px 17px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #3b4855,
+            #161d25
+        );
+
+    box-shadow:
+        0 5px 0 #080b0f,
+        inset 2px 2px 4px rgba(255, 255, 255, .08);
+
+    color: #c9d4de;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   AMOUNT BUTTONS
+   ========================================================= */
+
+.amount-grid {
+    width: min(720px, 100%);
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 16px;
+
+    margin-top: 25px;
+}
+
+.amount-button {
+    padding: 22px 10px;
+
+    border-radius: 16px;
+
+    font-size: 17px;
+
+    font-weight: 800;
+
+    background:
+        linear-gradient(
+            145deg,
+            #315774,
+            #142635
+        );
+
+    border: 1px solid #456b86;
+
+    box-shadow:
+        0 7px 0 #071018,
+        0 13px 19px rgba(0, 0, 0, .48),
+        inset 2px 2px 5px rgba(255, 255, 255, .1),
+        inset -3px -3px 6px rgba(0, 0, 0, .45);
+}
+
+.amount-button:hover {
+    transform: translateY(-4px);
+}
+
+
+/* =========================================================
+   OTHER AMOUNT
+   ========================================================= */
+
+.other-amount {
+    width: min(500px, 100%);
+
+    margin-top: 25px;
+}
+
+.other-amount label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #8fa0af;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    letter-spacing: 1.5px;
+}
+
+
+/* =========================================================
+   MONEY INPUT
+   ========================================================= */
+
+.money-input {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 4px 15px;
+
+    border-radius: 14px;
+
+    background: #061019;
+
+    border: 2px solid #30485c;
+
+    box-shadow:
+        inset 3px 3px 8px #000,
+        0 5px 12px rgba(0, 0, 0, .3);
+}
+
+.money-input:focus-within {
+    border-color: var(--blue);
+    box-shadow:
+        0 0 15px rgba(35, 140, 255, .18),
+        inset 3px 3px 8px #000;
+}
+
+.money-input span {
+    color: #79c9ff;
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+.money-input input {
+    width: 100%;
+
+    padding: 15px 5px;
+
+    background: transparent;
+
+    border: none;
+    outline: none;
+
+    color: white;
+
+    font-size: 18px;
+}
+
+.money-input input::placeholder {
+    color: #566878;
+}
+
+.large-input {
+    width: min(500px, 100%);
+
+    margin-top: 25px;
+}
+
+
+/* =========================================================
+   TEXT INPUT
+   ========================================================= */
+
+.text-input {
+    width: min(500px, 100%);
+
+    margin-top: 25px;
+
+    padding: 16px 18px;
+
+    border-radius: 14px;
+
+    background: #061019;
+
+    border: 2px solid #30485c;
+
+    outline: none;
+
+    color: white;
+
+    font-size: 16px;
+
+    box-shadow:
+        inset 3px 3px 8px #000,
+        0 5px 12px rgba(0, 0, 0, .3);
+}
+
+.text-input:focus {
+    border-color: var(--blue);
+}
+
+.text-input::placeholder {
+    color: #566878;
+}
+
+
+/* =========================================================
+   CASH SCREEN
+   ========================================================= */
+
+.cash-animation {
+    animation: cashPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes cashPulse {
+
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-7px);
+    }
+}
+
+.cash-display {
+    width: min(500px, 100%);
+
+    margin-top: 30px;
+
+    padding: 30px;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #172c3d,
+            #09131c
+        );
+
+    border: 1px solid #34536a;
+
+    box-shadow:
+        0 13px 25px rgba(0, 0, 0, .55),
+        inset 2px 2px 6px rgba(255, 255, 255, .07);
+}
+
+.cash-bundle {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 12px;
+}
+
+.cash-bundle span {
+    color: #78c9ff;
+
+    font-size: 20px;
+}
+
+.cash-bundle strong {
+    font-size: 43px;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   RECEIPT CHOICE
+   ========================================================= */
+
+.receipt-options {
+    width: min(650px, 100%);
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 25px;
+
+    margin-top: 35px;
+}
+
+.choice-button {
+    min-height: 175px;
+
+    border-radius: 22px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 15px;
+
+    font-size: 15px;
+
+    box-shadow:
+        0 10px 0 #070b0f,
+        0 18px 25px rgba(0, 0, 0, .55),
+        inset 2px 2px 6px rgba(255, 255, 255, .1);
+}
+
+.choice-button span {
+    font-size: 40px;
+}
+
+.choice-button.yes {
+    background:
+        linear-gradient(
+            145deg,
+            #2ccf96,
+            #08794f
+        );
+
+    border: 1px solid #5ce8b5;
+}
+
+.choice-button.no {
+    background:
+        linear-gradient(
+            145deg,
+            #485563,
+            #1b222b
+        );
+
+    border: 1px solid #637384;
+}
+
+.choice-button:hover {
+    transform: translateY(-5px);
+}
+
+
+/* =========================================================
+   RECEIPT
+   ========================================================= */
+
+.receipt-paper,
+.full-receipt {
+    width: min(470px, 100%);
+
+    margin-top: 15px;
+
+    padding: 25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #e9e9e4
+        );
+
+    color: #151515;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    box-shadow:
+        0 17px 30px rgba(0, 0, 0, .55);
+
+    position: relative;
+}
+
+
+/* Receipt bottom teeth */
+
+.receipt-paper::after,
+.full-receipt::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: -7px;
+    left: 0;
+
+    width: 100%;
+    height: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            transparent 5px,
+            #e9e9e4 5px
+        ) repeat-x;
+
+    background-size: 10px 10px;
+}
+
+
+.receipt-bank {
+    font-size: 19px;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+}
+
+.receipt-title {
+    margin-top: 5px;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+}
+
+.receipt-line {
+    width: 100%;
+
+    border-top: 2px dashed #555;
+
+    margin: 15px 0;
+}
+
+.receipt-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin: 11px 0;
+
+    font-size: 12px;
+
+    text-align: left;
+}
+
+.receipt-row strong {
+    text-align: right;
+}
+
+.receipt-paper p,
+.full-receipt p {
+    font-size: 10px;
+
+    text-align: center;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   RECEIPT ACTIONS
+   ========================================================= */
+
+.receipt-actions {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 18px;
+
+    flex-wrap: wrap;
+
+    margin-top: 10px;
+}
+
+
+/* =========================================================
+   BALANCE
+   ========================================================= */
+
+.balance-display {
+    width: min(550px, 100%);
+
+    margin-top: 30px;
+
+    padding: 40px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 12px;
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #203d55,
+            #0b151f
+        );
+
+    border: 1px solid #3a607d;
+
+    box-shadow:
+        0 13px 25px rgba(0, 0, 0, .6),
+        inset 2px 2px 6px rgba(255, 255, 255, .08);
+}
+
+.balance-display span {
+    color: #91c9ec;
+
+    font-size: 13px;
+}
+
+.balance-display strong {
+    font-size: clamp(34px, 6vw, 48px);
+}
+
+.balance-display small {
+    color: #8293a3;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================================================
+   PROCESSING
+   ========================================================= */
+
+.processing-loader {
+    width: 82px;
+    height: 82px;
+
+    margin-top: 120px;
+
+    padding: 7px;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            var(--cyan),
+            var(--blue),
+            var(--purple),
+            var(--cyan)
+        );
+
+    animation: rotateLoader 1s linear infinite;
+
+    box-shadow:
+        0 0 25px rgba(25, 217, 255, .3);
+}
+
+.processing-loader div {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+
+    background: #08131d;
+}
+
+@keyframes rotateLoader {
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   FINISHED SCREEN
+   ========================================================= */
+
+.finish-icon {
+    width: 95px;
+    height: 95px;
+
+    margin-top: 60px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    font-size: 52px;
+    font-weight: 900;
+
+    color: #d9fff0;
+
+    background:
+        linear-gradient(
+            145deg,
+            #32dda0,
+            #08794f
+        );
+
+    border: 2px solid #65f0bc;
+
+    box-shadow:
+        0 12px 25px rgba(0, 0, 0, .5),
+        0 0 30px rgba(32, 212, 147, .25),
+        inset 3px 3px 6px rgba(255, 255, 255, .3),
+        inset -4px -4px 7px rgba(0, 0, 0, .3);
+}
+
+.card-ejected {
+    margin-top: 25px;
+
+    perspective: 800px;
+}
+
+.card-ejected .fake-bank-card {
+    transform:
+        rotateX(5deg)
+        rotateY(-5deg);
+}
+
+.take-card {
+    margin-top: 20px;
+
+    color: #9ed8ff !important;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   PHYSICAL ATM FOOTER
+   ========================================================= */
+
+.atm-footer {
+    min-height: 95px;
+
+    padding: 10px 25px 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-around;
+
+    gap: 25px;
+}
+
+
+/* PHYSICAL SLOTS */
+
+.physical-slot {
+    text-align: center;
+}
+
+.physical-slot > span {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #98a5b1;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    letter-spacing: 1.5px;
+}
+
+.slot-opening {
+    width: 165px;
+    height: 20px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            180deg,
+            #010203,
+            #111820
+        );
+
+    box-shadow:
+        inset 0 5px 8px #000,
+        inset 0 -1px 2px rgba(255, 255, 255, .1),
+        0 2px 4px rgba(0, 0, 0, .8);
+}
+
+
+/* HELP */
+
+.help-button {
+    width: 75px;
+    height: 60px;
+
+    border-radius: 13px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 3px;
+
+    font-size: 9px;
+    font-weight: bold;
+
+    background:
+        linear-gradient(
+            145deg,
+            #3d4955,
+            #151b22
+        );
+
+    box-shadow:
+        0 6px 0 #070a0d,
+        inset 2px 2px 5px rgba(255, 255, 255, .1),
+        inset -3px -3px 5px rgba(0, 0, 0, .5);
+}
+
+.help-button span {
+    font-size: 23px;
+}
+
+
+/* =========================================================
+   INPUT NUMBER ARROWS
+   ========================================================= */
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+
+    margin: 0;
+}
+
+input[type="number"] {
+    appearance: textfield;
+}
+
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+
+::selection {
+    background: rgba(35, 140, 255, .45);
+
+    color: white;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    body {
+        padding: 5px;
+    }
+
+    .atm-kiosk {
+        width: 100%;
+
+        min-height: 100vh;
+
+        padding: 10px;
+
+        border-radius: 20px;
+    }
+
+    .atm-header {
+        height: 75px;
+
+        padding: 0 10px;
+    }
+
+    .system-status {
+        display: none;
+    }
+
+    .atm-screen {
+        min-height: 680px;
+
+        border-radius: 20px;
+    }
+
+    .screen-page {
+        min-height: 680px;
+
+        padding: 30px 20px;
+    }
+
+    .account-options,
+    .receipt-options {
+        grid-template-columns: 1fr;
+
+        max-width: 500px;
+    }
+
+    .transaction-grid {
+        grid-template-columns: 1fr;
+
+        max-width: 500px;
+    }
+
+    .transaction-button {
+        min-height: 125px;
+    }
+
+    .amount-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        max-width: 550px;
+    }
+
+    .atm-footer {
+        min-height: 80px;
+
+        padding: 5px;
+    }
+
+    .slot-opening {
+        width: 110px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE — PHONE
+   ========================================================= */
+
+@media (max-width: 500px) {
+
+    .atm-kiosk {
+        border-radius: 12px;
+    }
+
+    .atm-header {
+        height: 65px;
+    }
+
+    .bank-logo {
+        width: 45px;
+        height: 45px;
+
+        font-size: 22px;
+    }
+
+    .brand-text h2 {
+        font-size: 15px;
+    }
+
+    .brand-text span {
+        font-size: 7px;
+
+        letter-spacing: 2px;
+    }
+
+    .screen-page {
+        padding: 25px 13px;
+    }
+
+    .screen-icon {
+        width: 65px;
+        height: 65px;
+
+        font-size: 33px;
+    }
+
+    .pin-display {
+        gap: 13px;
+    }
+
+    .pin-display span {
+        width: 19px;
+        height: 19px;
+    }
+
+    .keypad {
+        gap: 9px;
+    }
+
+    .keypad button {
+        height: 55px;
+    }
+
+    .amount-grid {
+        gap: 10px;
+    }
+
+    .amount-button {
+        padding: 18px 5px;
+
+        font-size: 14px;
+    }
+
+    .menu-header {
+        padding: 12px;
+
+        gap: 10px;
+    }
+
+    .menu-header h2 {
+        font-size: 14px;
+    }
+
+    .mini-balance strong {
+        font-size: 13px;
+    }
+
+    .transaction-button {
+        min-height: 115px;
+    }
+
+    .transaction-icon {
+        font-size: 30px;
+    }
+
+    .transaction-button strong {
+        font-size: 14px;
+    }
+
+    .big-button {
+        min-width: 230px;
+    }
+
+    .atm-footer {
+        gap: 8px;
+    }
+
+    .physical-slot:nth-child(2) {
+        display: none;
+    }
+
+    .slot-opening {
+        width: 95px;
+    }
+
+    .help-button {
+        width: 60px;
+        height: 50px;
+    }
+}
+```
